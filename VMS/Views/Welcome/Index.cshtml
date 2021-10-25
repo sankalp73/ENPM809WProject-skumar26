@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "User Login";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to VMS!</h1>
+</div>
+    
+@using (Html.BeginForm("Login","Welcome"))
+{
+    <p style="border:3px; border-style:solid; border-color:#FF0000; padding: 1em;">
+    
+    <label for="umail">Email:</label>
+    <input type="text" id="umail" name="Email"><br>
+    
+    
+    <label for="pass">Password:</label>
+    <input type="password" id="pass" name="Pass"><br>
+    
+    <input type="submit" value="Sign In"><br>
+    <input type="submit" value="Sign On">
+    </p>
+}
