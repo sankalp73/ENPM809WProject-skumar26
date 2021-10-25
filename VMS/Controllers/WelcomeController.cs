@@ -12,10 +12,13 @@ namespace VMS.Controllers
     public class WelcomeController : Controller
     {
         private readonly ILogger<WelcomeController> _logger;
-
-        public WelcomeController(ILogger<WelcomeController> logger)
+        private dbService _db;
+        private AdminService _adminService;
+        public WelcomeController(ILogger<WelcomeController> logger, dbService db, AdminService adminService)
         {
             _logger = logger;
+            _db = db;
+            _adminService = adminService;
         }
 
         public IActionResult Index()
@@ -25,6 +28,8 @@ namespace VMS.Controllers
 
         public ActionResult Login(string Email, string Pass)
         {
+            Admin a = new Admin(Email, Pass); 
+            a = _adminService.Create(a);
             return Content("Good Morning " + Email);
         
         }
@@ -32,7 +37,7 @@ namespace VMS.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new MongoDb { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

@@ -12,11 +12,17 @@ namespace VMS.Models
 
         public string Email { get; set; }
 
-        public decimal Password { get; set; }
+        public string Password { get; set; }
 
-        public string Salt { get; set; }
+        public Admin(string email, string pass)
+        {
+            this.Email = email;
+            this.Password = pass;
+        }
 
-        public DateTime PassSetDate { get; set; }
+       // public string Salt { get; set; }
+
+        //public DateTime PassSetDate { get; set; }
         
     }
 }

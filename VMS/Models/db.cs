@@ -18,16 +18,24 @@ namespace VMS.Models
         string DatabaseName { get; set; }
     }
 
+    public class dbService {
+        public IMongoClient client;
+        public IMongoDatabase database;
+
+        public dbService(IVMSDatabaseSettings settings)
+        {
+            client = new MongoClient(settings.ConnectionString);
+            database = client.GetDatabase(settings.DatabaseName); 
+        }
+    }
+
     public class AdminService
     {
         private readonly IMongoCollection<Admin> _admins;
 
-        public AdminService(IVMSDatabaseSettings settings)
-        {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
-
-            _admins = database.GetCollection<Admin>(settings.AdminCollectionName);
+        public AdminService(dbService db,IVMSDatabaseSettings settings)
+        { 
+            _admins = db.database.GetCollection<Admin>(settings.AdminCollectionName);
         }
 
         public List<Admin> Get() =>

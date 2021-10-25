@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\student\\Workspace\\VMS\\VMS.csproj": {}
+    "C:\\Users\\student\\Workspace\\enpm809wproject-skumar26\\VMS\\VMS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\student\\Workspace\\VMS\\VMS.csproj": {
+    "C:\\Users\\student\\Workspace\\enpm809wproject-skumar26\\VMS\\VMS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\student\\Workspace\\VMS\\VMS.csproj",
+        "projectUniqueName": "C:\\Users\\student\\Workspace\\enpm809wproject-skumar26\\VMS\\VMS.csproj",
         "projectName": "VMS",
-        "projectPath": "C:\\Users\\student\\Workspace\\VMS\\VMS.csproj",
+        "projectPath": "C:\\Users\\student\\Workspace\\enpm809wproject-skumar26\\VMS\\VMS.csproj",
         "packagesPath": "C:\\Users\\student\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\student\\Workspace\\VMS\\obj\\",
+        "outputPath": "C:\\Users\\student\\Workspace\\enpm809wproject-skumar26\\VMS\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\student\\AppData\\Roaming\\NuGet\\NuGet.Config",

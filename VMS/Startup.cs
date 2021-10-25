@@ -28,10 +28,12 @@ namespace VMS
             services.Configure<VMSDatabaseSettings>(
                 Configuration.GetSection(nameof(VMSDatabaseSettings)));
 
-            services.AddSingleton<IVMSDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<VMSDatabaseSettings>>().Value);
+            services.AddSingleton<IVMSDatabaseSettings>(services =>
+                services.GetRequiredService<IOptions<VMSDatabaseSettings>>().Value);
 
+            services.AddSingleton<dbService>();
             services.AddSingleton<AdminService>();
+
             services.AddControllersWithViews();
         }
 
