@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.2.1" />
+    <PackageReference Include="Konscious.Security.Cryptography.Blake2" Version="1.0.9" />
     <PackageReference Include="MongoDB.Driver" Version="2.13.2" />
+    <PackageReference Include="Otp.NET" Version="1.2.2" />
   </ItemGroup>
 
 </Project>

@@ -40,9 +40,21 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Konscious.Security.Cryptography.Argon2": {
+              "target": "Package",
+              "version": "[1.2.1, )"
+            },
+            "Konscious.Security.Cryptography.Blake2": {
+              "target": "Package",
+              "version": "[1.0.9, )"
+            },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.13.2, )"
+            },
+            "Otp.NET": {
+              "target": "Package",
+              "version": "[1.2.2, )"
             }
           },
           "imports": [

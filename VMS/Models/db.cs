@@ -41,8 +41,8 @@ namespace VMS.Models
         public List<Admin> Get() =>
             _admins.Find(Admin => true).ToList();
 
-        public Admin Get(string id) =>
-            _admins.Find<Admin>(admin => admin.Id == id).FirstOrDefault();
+        public Admin Get(string email) =>
+            _admins.Find<Admin>(admin => admin.Email == email).FirstOrDefault();
 
         public Admin Create(Admin admin)
         {

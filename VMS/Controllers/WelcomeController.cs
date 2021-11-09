@@ -26,13 +26,25 @@ namespace VMS.Controllers
             return View();
         }
 
-        public ActionResult Login(string Email, string Pass)
+        [HttpPost]
+        public ActionResult SignIn(string Email, string Pass)
         {
-            Admin a = new Admin(Email, Pass); 
-            a = _adminService.Create(a);
-            return Content("Good Morning " + Email);
+            // verify if the user exists or not
+            var client = _adminService.Get(Email);
+
+            if (client.Verified == 0)
+                return Content("Please verify your email");
+
+            return View();
         
         }
+
+        public ActionResult SignOn()
+        {
+            return View("SignOn");
+
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
