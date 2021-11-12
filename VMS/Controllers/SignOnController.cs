@@ -1,33 +1,54 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VMS.Models;
+using IdentityResult = Microsoft.AspNetCore.Identity.IdentityResult;
 
 namespace VMS.Controllers
 {
     public class SignOnController : Controller
     {
-        private AdminService _adminService;
+        private Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _adminManager;
+
+        public SignOnController(Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> adminManager)
+        {
+            this._adminManager = adminManager;
+        }
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult SignOn(string Email, string Pass, string confPass, string ID)
+        public async Task<IActionResult> SignOn(string email, string pass, string confpass, string id)
         {
-            if (!Pass.Equals(confPass))
-                return View();
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(confpass) || string.IsNullOrEmpty(pass)) 
+                    return Content("All fields are mandatory!");
 
-            var cred  = Encryption.HashWithSalt(Pass);
+                if(!pass.Equals(confpass))
+                    return Content("password do not match!");
 
-            Admin a = new Admin(Email, cred.Item2, cred.Item1, ID, (DateTime.Now));
-            a = _adminService.Create(a);
+                ApplicationUser appUser = new ApplicationUser
+                {
+                    Email = email,
+                    UserName = id
+                };
 
-            // send an email to HR for verfication
-
+                IdentityResult result = await _adminManager.CreateAsync(appUser, pass);
+                if (result.Succeeded)
+                    return Content("User Created Successfully! Please verify email!");
+                else
+                {
+                    foreach (IdentityError error in result.Errors)
+                        return Content(error.Description.ToString());
+                }
+            }
 
             return View();
         }

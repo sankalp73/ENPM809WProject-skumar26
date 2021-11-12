@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,13 +14,13 @@ namespace VMS.Controllers
     public class WelcomeController : Controller
     {
         private readonly ILogger<WelcomeController> _logger;
-        private dbService _db;
-        private AdminService _adminService;
-        public WelcomeController(ILogger<WelcomeController> logger, dbService db, AdminService adminService)
+        private UserManager<ApplicationUser> _userManager;
+        private SignInManager<ApplicationUser> _signInManager;
+
+        public WelcomeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
-            _logger = logger;
-            _db = db;
-            _adminService = adminService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -27,16 +29,29 @@ namespace VMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult SignIn(string Email, string Pass)
+        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SignIn(string email, string pass)
         {
-            // verify if the user exists or not
-            var client = _adminService.Get(Email);
+            if (ModelState.IsValid)
+            {
+                if (ModelState.IsValid)
+                {
+                    ApplicationUser appUser = await _userManager.FindByEmailAsync(email);
+                    if (appUser != null)
+                    {
+                        await _signInManager.SignOutAsync();
+                        Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(appUser, pass, false, false);
+                        if (result.Succeeded)
+                            return View("AdminHome");
+                    }
+                    ModelState.AddModelError(nameof(email), "Login Failed: Invalid Email or password");
+                }
+            }
 
-            if (client.Verified == 0)
-                return Content("Please verify your email");
-
+            // If we got this far, something failed, redisplay form
             return View();
-        
+
         }
 
         public ActionResult SignOn()

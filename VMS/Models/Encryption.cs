@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using MongoDB.Bson;
@@ -39,6 +40,15 @@ namespace VMS.Models
 
         }
 
+        static public bool VerifyHashWithSalt(string password, string saltBytes, string storedPassword)
+        {
+            if (saltBytes[saltBytes.Length - 1] == '\r')
+                saltBytes = saltBytes.Remove(saltBytes.Length - 1, 1);
+            byte[] saltByte = Convert.FromBase64String(saltBytes);
+            byte[] storedPass = Convert.FromBase64String(storedPassword);
+            byte[] digestBytes = ComputeHash(password, saltByte);
+            return digestBytes.SequenceEqual(storedPass);
+        }
         static public byte[] Hash(string password)
         {
             byte[] saltBytes = CreateSalt();

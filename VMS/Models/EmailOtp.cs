@@ -25,12 +25,7 @@ namespace VMS.Models
     {
         protected Tuple<string, string> getConfig()
         {
-            string text = System.IO.File.ReadAllText(@"C:\Users\student\Workspace\Config.txt");
-
-            // Display the file contents to the console. Variable text is a string.
-            System.Console.WriteLine("Contents of WriteText.txt = {0}", text);
-
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\student\Workspace\MigrateDatabase\customerlogin.txt");
+            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\student\Workspace\Config.txt");
 
             foreach (string line in lines)
             {

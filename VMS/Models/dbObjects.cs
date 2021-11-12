@@ -1,30 +1,32 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using AspNetCore.Identity.MongoDbCore.Models;
+using Microsoft.AspNetCore.Identity;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDbGenericRepository.Attributes;
 
 namespace VMS.Models
 {
+    [CollectionName("application")]
+    public class ApplicationUser : MongoIdentityUser<Guid>
+    {
+    }
+
+    [CollectionName("applicationRoles")]
+    public class ApplicationRoles : MongoIdentityRole<Guid>
+    {
+    }
+
     public class Admin
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        [Required]
+        [EmailAddress(ErrorMessage = "Invalid Email")]
         public string Email { get; set; }
         public string Salt { get; set; }
-        public string Hash { get; set; }
+        [Required]
+        public string Password { get; set; }
+        [Required]
         public string IdProof { get; set; }
-        public int Verified { get; set; }
-        public DateTime PassSetDate { get; set; }
-
-        public Admin(string email, string salt, string hash, string idproof, DateTime passsetdate)
-        {
-            this.Email = email;
-            this.Salt = salt;
-            this.Hash = hash;
-            this.PassSetDate = passsetdate;
-            this.IdProof = idproof;
-            this.Verified = 0;
-        }
-        
     }
 }

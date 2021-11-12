@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNet.Identity.EntityFramework;
 using MongoDB.Driver;
 
 namespace VMS.Models
@@ -27,37 +28,6 @@ namespace VMS.Models
             client = new MongoClient(settings.ConnectionString);
             database = client.GetDatabase(settings.DatabaseName); 
         }
-    }
-
-    public class AdminService
-    {
-        private readonly IMongoCollection<Admin> _admins;
-
-        public AdminService(dbService db,IVMSDatabaseSettings settings)
-        { 
-            _admins = db.database.GetCollection<Admin>(settings.AdminCollectionName);
-        }
-
-        public List<Admin> Get() =>
-            _admins.Find(Admin => true).ToList();
-
-        public Admin Get(string email) =>
-            _admins.Find<Admin>(admin => admin.Email == email).FirstOrDefault();
-
-        public Admin Create(Admin admin)
-        {
-            _admins.InsertOne(admin);
-            return admin;
-        }
-
-        public void Update(string id, Admin adminIn) =>
-            _admins.ReplaceOne(admin => admin.Id == id, adminIn);
-
-        public void Remove(Admin adminIn) =>
-            _admins.DeleteOne(admin => admin.Id == adminIn.Id);
-
-        public void Remove(string id) =>
-            _admins.DeleteOne(admin => admin.Id == id);
     }
 }
 

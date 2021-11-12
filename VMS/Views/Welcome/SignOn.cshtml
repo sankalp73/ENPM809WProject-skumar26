@@ -2,24 +2,22 @@
     ViewData["Title"] = "Register Account";
 }
 
-@using (Html.BeginForm("Login", "Welcome"))
-{
-<p style="border:3px; border-style:solid; border-color:#FF0000; padding: 1em;">
+<form asp-action="SignOn" asp-controller="SignOn">
+    <p style="border:3px; border-style:solid; border-color:#FF0000; padding: 1em;">
 
-    <label for="umail">Email:</label>
-    <input type="text" id="umail" name="Email"><br>
+        <label for="umail">Email:</label>
+        <input type="text" id="email" name="Email"><br>
 
+        <label for="pass">Password:</label>
+        <input type="password" id="pass" name="Pass"><br>
 
-    <label for="pass">Password:</label>
-    <input type="password" id="pass" name="Pass"><br>
-
-    <label for="conf-pass">Confirm Password:</label>
-    <input type="password" id="conf-pass" name="Conf-Pass"><br>
+        <label for="confpass">Confirm Password:</label>
+        <input type="password" id="confpass" name="ConfPass"><br>
 
 
-    <label for="ID">Government-id/Employee-no:</label>
-    <input type="text" id="ID" name="ID"><br>
+        <label for="ID">Government-id/Employee-no:</label>
+        <input type="text" id="ID" name="ID"><br>
 
-    <input type="submit" value="Sign On"><br>
-</p>
-}
+        <input type="submit" value="Sign On"><br>
+    </p>
+</form>

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +23,33 @@ namespace VMS
 
         public IConfiguration Configuration { get; }
 
+        public void ConfigureDatabase(IServiceCollection services)
+        {
+            services.AddIdentity<ApplicationUser, ApplicationRoles>(options =>
+            {
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.AllowedForNewUsers = true;
+
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 1;
+                options.SignIn.RequireConfirmedEmail = true;
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = true;
+            })
+                .AddMongoDbStores<ApplicationUser, ApplicationRoles, Guid>
+            (
+               Configuration.GetSection(nameof(VMSDatabaseSettings)).GetSection("ConnectionString").Value,
+               Configuration.GetSection(nameof(VMSDatabaseSettings)).GetSection("DatabaseName").Value
+            );
+
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         { 
@@ -31,10 +59,46 @@ namespace VMS
             services.AddSingleton<IVMSDatabaseSettings>(services =>
                 services.GetRequiredService<IOptions<VMSDatabaseSettings>>().Value);
 
-            services.AddSingleton<dbService>();
-            services.AddSingleton<AdminService>();
-
             services.AddControllersWithViews();
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Default Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.AllowedForNewUsers = true;
+
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 1;
+                options.SignIn.RequireConfirmedEmail = true;
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = true;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                //options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                //options.Cookie.Name = "YourAppCookieName";
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(120);
+                options.LoginPath = "/Welcome";
+                // ReturnUrlParameter requires 
+                //using Microsoft.AspNetCore.Authentication.Cookies;
+                //options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                options.SlidingExpiration = true;
+            });
+
+            ConfigureDatabase(services);  
+
+            services.Configure<PasswordHasherOptions>(option =>
+            {
+                option.IterationCount = 8000;
+            });
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
