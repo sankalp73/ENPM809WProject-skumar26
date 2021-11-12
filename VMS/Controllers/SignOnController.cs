@@ -24,6 +24,8 @@ namespace VMS.Controllers
         }
 
         [HttpPost]
+        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignOn(string email, string pass, string confpass, string id)
         {
             if (ModelState.IsValid)
@@ -46,7 +48,7 @@ namespace VMS.Controllers
                 else
                 {
                     foreach (IdentityError error in result.Errors)
-                        return Content(error.Description.ToString());
+                         ModelState.AddModelError(string.Empty, error.Description.ToString());
                 }
             }
 

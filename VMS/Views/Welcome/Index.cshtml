@@ -6,8 +6,8 @@
     <h1 class="display-4">Welcome to VMS!</h1>
 </div>
 
-@using (Html.BeginForm("Login", "Welcome"))
-{
+
+<form asp-action="SignIn" asp-controller="Welcome">
     <p style="border:3px; border-style:solid; border-color:#FF0000; padding: 1em;">
 
         <label for="umail">Email:</label>
@@ -19,7 +19,9 @@
 
         <input type="submit" value="Sign In"><br>
     </p>
-}
+</form>
 <input type="button"
        value="SignOn"
        onclick="location.href='@Url.Action("SignOn", "Welcome" )'" />
+
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })

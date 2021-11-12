@@ -21,7 +21,4 @@
         <input type="submit" value="Sign On"><br>
     </p>
 </form>
-
-<div class="alert alert-danger">
-    <p>@ViewBag.ErrorMessage</p>
-</div>
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })

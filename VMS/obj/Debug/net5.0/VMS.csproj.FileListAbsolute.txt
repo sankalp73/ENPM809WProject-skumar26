@@ -91,7 +91,6 @@ C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\VMS.gen
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\Konscious.Security.Cryptography.Argon2.dll
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\Konscious.Security.Cryptography.Blake2.dll
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\Otp.NET.dll
-C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\Welcome\SignOn.cshtml.g.cs
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\Welcome\AdminHome.cshtml.g.cs
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\VMS.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\web.config
@@ -124,3 +123,7 @@ C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\Microso
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\Microsoft.Owin.Security.Cookies.dll
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\Microsoft.Owin.Security.OAuth.dll
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\Owin.dll
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\Shared\SignOn.cshtml.g.cs
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\Welcome\_SecondTab.cshtml.g.cs
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\Welcome\_ThirdTab.cshtml.g.cs
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\Welcome\_FourthTab.cshtml.g.cs

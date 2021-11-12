@@ -33,8 +33,7 @@ namespace VMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SignIn(string email, string pass)
         {
-            if (ModelState.IsValid)
-            {
+         
                 if (ModelState.IsValid)
                 {
                     ApplicationUser appUser = await _userManager.FindByEmailAsync(email);
@@ -47,10 +46,10 @@ namespace VMS.Controllers
                     }
                     ModelState.AddModelError(nameof(email), "Login Failed: Invalid Email or password");
                 }
-            }
+           
 
             // If we got this far, something failed, redisplay form
-            return View();
+            return View("Index");
 
         }
 
