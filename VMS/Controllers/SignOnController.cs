@@ -13,7 +13,6 @@ namespace VMS.Controllers
     public class SignOnController : Controller
     {
         private Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _adminManager;
-
         public SignOnController(Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> adminManager)
         {
             this._adminManager = adminManager;
@@ -30,8 +29,11 @@ namespace VMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(confpass) || string.IsNullOrEmpty(pass)) 
-                    return Content("All fields are mandatory!");
+                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(confpass) || string.IsNullOrEmpty(pass))
+                {
+                    ModelState.AddModelError(string.Empty, "All fields are mandatory!");
+                    return View();
+                }
 
                 if(!pass.Equals(confpass))
                     return Content("password do not match!");
@@ -44,11 +46,18 @@ namespace VMS.Controllers
 
                 IdentityResult result = await _adminManager.CreateAsync(appUser, pass);
                 if (result.Succeeded)
+                {
+                    var token = await _adminManager.GenerateEmailConfirmationTokenAsync(appUser);
+                    token = System.Web.HttpUtility.UrlEncode(token);
+                    //var confirmationLink = Url.Action("ConfirmEmail", "Account", new { token, email = email }, Request.Scheme);
+                    EmailOtp.sendOTP(email, 0, token);
+                   // await _adminManager.AddToRoleAsync(appUser, "Admin");
                     return Content("User Created Successfully! Please verify email!");
+                }
                 else
                 {
                     foreach (IdentityError error in result.Errors)
-                         ModelState.AddModelError(string.Empty, error.Description.ToString());
+                        ModelState.AddModelError(string.Empty, error.Description.ToString());
                 }
             }
 

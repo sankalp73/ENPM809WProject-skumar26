@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VMS.Controllers;
 using VMS.Models;
 
 namespace VMS
@@ -37,16 +38,24 @@ namespace VMS
                 options.Password.RequireUppercase = true;
                 options.Password.RequiredLength = 8;
                 options.Password.RequiredUniqueChars = 1;
-                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedEmail = true;
                 options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = true;
+                options.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
             })
                 .AddMongoDbStores<ApplicationUser, ApplicationRoles, Guid>
             (
                Configuration.GetSection(nameof(VMSDatabaseSettings)).GetSection("ConnectionString").Value,
                Configuration.GetSection(nameof(VMSDatabaseSettings)).GetSection("DatabaseName").Value
-            );
+            )
+            .AddDefaultTokenProviders()
+            .AddTokenProvider<EmailConfirmationTokenProvider<ApplicationUser>>("emailconfirmation");
+
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+                            opt.TokenLifespan = TimeSpan.FromHours(2));
+            services.Configure<EmailConfirmationTokenProviderOptions>(opt =>
+                opt.TokenLifespan = TimeSpan.FromDays(3));
 
         }
 

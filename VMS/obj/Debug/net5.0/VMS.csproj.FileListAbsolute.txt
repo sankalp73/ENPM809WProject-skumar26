@@ -127,3 +127,4 @@ C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\V
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\Welcome\_SecondTab.cshtml.g.cs
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\Welcome\_ThirdTab.cshtml.g.cs
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\Welcome\_FourthTab.cshtml.g.cs
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\VerifyAccount\Index.cshtml.g.cs

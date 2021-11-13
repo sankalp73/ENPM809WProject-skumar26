@@ -39,6 +39,7 @@ namespace VMS.Controllers
                     ApplicationUser appUser = await _userManager.FindByEmailAsync(email);
                     if (appUser != null)
                     {
+                        await _userManager.IsEmailConfirmedAsync(appUser);
                         await _signInManager.SignOutAsync();
                         Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(appUser, pass, false, false);
                         if (result.Succeeded)

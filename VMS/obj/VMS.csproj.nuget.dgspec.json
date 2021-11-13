@@ -72,6 +72,10 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.13.2, )"

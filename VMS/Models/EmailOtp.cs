@@ -25,19 +25,20 @@ namespace VMS.Models
     {
         protected Tuple<string, string> getConfig()
         {
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\student\Workspace\Config.txt");
+            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\student\Workspace\config.txt");
 
             foreach (string line in lines)
             {
-                string[] values = line.Split('|');
+                string[] values = line.Split(',');
                 return Tuple.Create(values[0], values[1]);
             }
             return Tuple.Create("", "");
         }
 
-        public void sendOTP(string mail, int cmd, string details)
+        public static void sendOTP(string mail, int cmd, string details)
         {
             string email = mail;
+            var emailotp = new EmailOtp();
             OTP Otp = new OTP();
             byte[] secretKey = Encryption.Hash(email);
             Otp.totp = new Totp(secretKey, totpSize: 8, step: 30, mode: OtpHashMode.Sha512);
@@ -45,8 +46,8 @@ namespace VMS.Models
 
             TokenHashMap.HashMap["email"] = Otp;
             Tuple<string, string> t;
-            t = getConfig();
-            string to = t.Item1; //To address    
+            t = emailotp.getConfig();
+            string to = email; //To address    
             string from = t.Item1; //From address    
             MailMessage message = new MailMessage(from, to);
             string Url = "";
@@ -54,12 +55,12 @@ namespace VMS.Models
             switch (cmd)
             {
                 case 0:
-                    Url = "http://localhost:52251/Content/VerifyAccount.aspx?token=" + Otp.token;
+                    Url = "https://localhost:44337/VerifyAccount?token=" + details +"&email=" + email;
                     mailbody = "Click on the link below to verify your account:" + Url;
                     message.Subject = "Please verify your account";
                     break;
                 case 1:
-                    Url = "http://localhost:52251/Content/AppointmentObliged.aspx?token=" + Otp.token;
+                    Url = "https://localhost:44337/AppointmentObliged.aspx?token=" + Otp.token;
                     mailbody = "Click on the link to check in to your appointment:" + Url;
                     message.Subject = "OTP for appointment";
                     break;
@@ -78,6 +79,7 @@ namespace VMS.Models
             client.EnableSsl = true;
             client.UseDefaultCredentials = false;
             client.Credentials = basicCredential1;
+            client.Send(message);
         }
     }
 }

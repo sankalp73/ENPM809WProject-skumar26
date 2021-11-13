@@ -9,4 +9,5 @@
   <ContentRoot BasePath="_content/Syncfusion.Blazor.Spinner" Path="C:\Users\student\.nuget\packages\syncfusion.blazor.spinner\19.3.0.48\build\..\staticwebassets\" />
   <ContentRoot BasePath="_content/Syncfusion.Blazor.SplitButtons" Path="C:\Users\student\.nuget\packages\syncfusion.blazor.splitbuttons\19.3.0.48\build\..\staticwebassets\" />
   <ContentRoot BasePath="_content/Syncfusion.Blazor.Themes" Path="C:\Users\student\.nuget\packages\syncfusion.blazor.themes\19.3.0.48\build\..\staticwebassets\" />
+  <ContentRoot BasePath="Identity" Path="C:\Users\student\.nuget\packages\microsoft.aspnetcore.identity.ui\6.0.0\build\..\staticwebassets\V5\" />
 </StaticWebAssets>

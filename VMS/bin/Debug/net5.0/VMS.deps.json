@@ -41,6 +41,7 @@
           "Microsoft.AspNet.Identity.EntityFramework": "2.2.3",
           "Microsoft.AspNet.Identity.Owin": "2.2.3",
           "Microsoft.AspNetCore.Identity": "2.2.0",
+          "Microsoft.AspNetCore.Identity.UI": "6.0.0",
           "MongoDB.Driver": "2.13.2",
           "Otp.NET": "1.2.2",
           "Sitecore.FakeDb": "2.0.1",
@@ -599,6 +600,7 @@
           "Microsoft.Extensions.Identity.Core": "3.1.12"
         }
       },
+      "Microsoft.AspNetCore.Identity.UI/6.0.0": {},
       "Microsoft.AspNetCore.Metadata/5.0.0": {},
       "Microsoft.AspNetCore.WebUtilities/2.2.0": {
         "dependencies": {
@@ -3720,6 +3722,13 @@
       "sha512": "sha512-F16BKeS96wKhyIyhaFR7m8kRIwIvPUW9Dx7IlGWmu2IIwnUDCdo+2z7IrWKA8r77pZQ1UE9kYcBPg5456YdAIA==",
       "path": "microsoft.aspnetcore.identity/2.2.0",
       "hashPath": "microsoft.aspnetcore.identity.2.2.0.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Identity.UI/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mOHPfEtt524BDlZPZ4rXZRZp5R8LnMXAJ+57tx7eaSw8KGqI+qYUbtFRtZKynZma3+tuiLhJlVhOTj2IdfB8WQ==",
+      "path": "microsoft.aspnetcore.identity.ui/6.0.0",
+      "hashPath": "microsoft.aspnetcore.identity.ui.6.0.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Metadata/5.0.0": {
       "type": "package",
