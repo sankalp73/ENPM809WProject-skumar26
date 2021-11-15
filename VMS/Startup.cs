@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using VMS.Controllers;
 using VMS.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace VMS
 {
@@ -28,8 +29,8 @@ namespace VMS
         {
             services.AddIdentity<ApplicationUser, ApplicationRoles>(options =>
             {
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
-                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(24*60);
+                options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = true;
 
                 options.Password.RequireDigit = true;
@@ -72,7 +73,7 @@ namespace VMS
             services.Configure<IdentityOptions>(options =>
             {
                 // Default Lockout settings.
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(24*60);
                 options.Lockout.MaxFailedAccessAttempts = 3;
                 options.Lockout.AllowedForNewUsers = true;
 
@@ -88,16 +89,23 @@ namespace VMS
                 options.User.RequireUniqueEmail = true;
             });
 
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(5);
+                options.Cookie.Name = "session";
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddSingleton<CampaignService>();
+            services.AddSingleton<CenterService>();
+
             services.ConfigureApplicationCookie(options =>
             {
-                //options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 //options.Cookie.Name = "YourAppCookieName";
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(120);
-                options.LoginPath = "/Welcome";
-                // ReturnUrlParameter requires 
-                //using Microsoft.AspNetCore.Authentication.Cookies;
-                //options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                options.LoginPath = "/";
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
                 options.SlidingExpiration = true;
             });
 
@@ -107,12 +115,13 @@ namespace VMS
             {
                 option.IterationCount = 8000;
             });
-          
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSession();
 
             if (env.IsDevelopment())
             {
@@ -129,15 +138,17 @@ namespace VMS
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Welcome}/{action=Index}/{id?}");
+                    pattern: "{controller=Welcome}/{action=Index}");
             });
-
+           
+            
         }
     }
 }

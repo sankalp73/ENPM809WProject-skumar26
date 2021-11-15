@@ -7,28 +7,32 @@ using Syncfusion.Blazor.Navigations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNetCore.Authentication;
+using VMS.Models;
 
 namespace VMS.Controllers
 {
+    [Authorize]
     public class LogOutController : Controller
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        public LogOutController(SignInManager<IdentityUser> signInManager)
+        private  SignInManager<ApplicationUser> _signInManager;
+        public LogOutController(SignInManager<ApplicationUser> signInManager)
         {
             _signInManager = signInManager;
         }
 
-        [Authorize]
+        
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize]
         public async Task<IActionResult> Logout()
         {
+            HttpContext.Session.Clear();
+            HttpContext.SignOutAsync();
             await _signInManager.SignOutAsync();
-            return View("Welcome");
+            return View("../Welcome/Index");
         }
     }
 }

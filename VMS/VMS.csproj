@@ -13,20 +13,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AntiXSS" Version="4.3.0" />
     <PackageReference Include="AspNetCore.Identity.MongoDbCore" Version="3.1.2" />
+    <PackageReference Include="Dks.SimpleToken.SystemWeb" Version="1.0.1" />
     <PackageReference Include="EJS" Version="1.0.0" />
     <PackageReference Include="EJS.Core" Version="1.0.2" />
     <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.2.1" />
     <PackageReference Include="Konscious.Security.Cryptography.Blake2" Version="1.0.9" />
+    <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNet.Identity.Owin" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="MongoDB.Driver" Version="2.13.2" />
     <PackageReference Include="Otp.NET" Version="1.2.2" />
     <PackageReference Include="Sitecore.FakeDb" Version="2.0.1" />
     <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.3.0.48" />
     <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="19.3.0.48" />
+    <PackageReference Include="Synercoding.FormsAuthentication" Version="2.1.0" />
   </ItemGroup>
 
 </Project>

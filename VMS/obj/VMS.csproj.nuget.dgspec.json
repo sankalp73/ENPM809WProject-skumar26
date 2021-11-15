@@ -40,9 +40,17 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "AntiXSS": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
             "AspNetCore.Identity.MongoDbCore": {
               "target": "Package",
               "version": "[3.1.2, )"
+            },
+            "Dks.SimpleToken.SystemWeb": {
+              "target": "Package",
+              "version": "[1.0.1, )"
             },
             "EJS": {
               "target": "Package",
@@ -60,6 +68,10 @@
               "target": "Package",
               "version": "[1.0.9, )"
             },
+            "Microsoft.AspNet.Identity.Core": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            },
             "Microsoft.AspNet.Identity.EntityFramework": {
               "target": "Package",
               "version": "[2.2.3, )"
@@ -75,6 +87,14 @@
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[5.0.2, )"
             },
             "MongoDB.Driver": {
               "target": "Package",
@@ -95,6 +115,10 @@
             "Syncfusion.EJ2.AspNet.Core": {
               "target": "Package",
               "version": "[19.3.0.48, )"
+            },
+            "Synercoding.FormsAuthentication": {
+              "target": "Package",
+              "version": "[2.1.0, )"
             }
           },
           "imports": [

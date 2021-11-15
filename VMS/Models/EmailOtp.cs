@@ -23,9 +23,9 @@ namespace VMS.Models
 
     public class EmailOtp
     {
-        protected Tuple<string, string> getConfig()
+        protected Tuple<string, string> getConfig(string path)
         {
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\student\Workspace\config.txt");
+            string[] lines = System.IO.File.ReadAllLines(path);
 
             foreach (string line in lines)
             {
@@ -46,7 +46,7 @@ namespace VMS.Models
 
             TokenHashMap.HashMap["email"] = Otp;
             Tuple<string, string> t;
-            t = emailotp.getConfig();
+            t = emailotp.getConfig("C:\\Users\\student\\Workspace\\config.txt");
             string to = email; //To address    
             string from = t.Item1; //From address    
             MailMessage message = new MailMessage(from, to);
