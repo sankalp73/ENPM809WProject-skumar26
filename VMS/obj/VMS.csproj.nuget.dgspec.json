@@ -116,9 +116,17 @@
               "target": "Package",
               "version": "[19.3.0.48, )"
             },
+            "Syncfusion.Pdf.Net.Core": {
+              "target": "Package",
+              "version": "[19.3.0.53, )"
+            },
             "Synercoding.FormsAuthentication": {
               "target": "Package",
               "version": "[2.1.0, )"
+            },
+            "iTextSharp": {
+              "target": "Package",
+              "version": "[5.5.13.2, )"
             }
           },
           "imports": [
