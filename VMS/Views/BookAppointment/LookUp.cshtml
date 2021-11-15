@@ -1,0 +1,125 @@
+﻿@model IEnumerable<VMS.Models.Center>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.vname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.startTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.zip)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.campaign)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            
+        <tr>
+
+
+            <form asp-action="MakeAppointment" asp-controller="BookAppointment">
+            <td>
+                <div class="form-group">
+                    <input type="text" name="Name" id="Name" value="@Html.DisplayFor(modelItem => item.Name)" class="form-control" readonly="readonly">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" name="vname" id="vname" value="@Html.DisplayFor(modelItem => item.vname)" class="form-control" readonly="readonly">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" name="quantity" id="quantity" value="@Html.DisplayFor(modelItem => item.quantity)" class="form-control" readonly="readonly">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" name="startTime" id="startTime" value="@Html.DisplayFor(modelItem => item.startTime)" class="form-control" readonly="readonly">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" name="EndTime" id="EndTime" value="@Html.DisplayFor(modelItem => item.EndTime)" class="form-control" readonly="readonly">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" name="EndDate" id="EndDate" value="@Html.DisplayFor(modelItem => item.EndDate)" class="form-control" readonly="readonly">
+                   </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" name="zip" id="zip" value="@Html.DisplayFor(modelItem => item.zip)" class="form-control" readonly="readonly">
+                   </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" name="campaignName" id="campaignName" value="@Html.DisplayFor(modelItem => item.campaign.Name)" class="form-control" readonly="readonly">
+                   </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <select class="form-control" name="timings" id="timings">
+                        <option value="">Select a Time</option>
+                        <option value="12:00 AM">12:00 AM</option>
+                        <option value="1:00 AM">1:00 AM</option>
+                        <option value="2:00 AM">2:00 AM</option>
+                        <option value="3:00 AM">3:00 AM</option>
+                        <option value="4:00 AM">4:00 AM</option>
+                        <option value="5:00 AM">5:00 AM</option>
+                        <option value="6:00 AM">6:00 AM</option>
+                        <option value="7:00 AM">7:00 AM</option>
+                        <option value="8:00 AM">8:00 AM</option>
+                        <option value="9:00 AM">9:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="12:00 PM">12:00 PM</option>
+                        <option value="1:00 PM">1:00 PM</option>
+                        <option value="2:00 PM">2:00 PM</option>
+                        <option value="3:00 PM">3:00 PM</option>
+                        <option value="4:00 PM">4:00 PM</option>
+                        <option value="5:00 PM">5:00 PM</option>
+                        <option value="6:00 PM">6:00 PM</option>
+                        <option value="7:00 PM">7:00 PM</option>
+                        <option value="8:00 PM">8:00 PM</option>
+                        <option value="9:00 PM">9:00 PM</option>
+                        <option value="10:00 PM">10:00 PM</option>
+                        <option value="11:00 PM">11:00 PM</option>
+                    </select>
+
+                </div>
+            </td>
+            <td>
+                <input type="submit" value="Select" />
+            </td>
+            
+           </form>
+        </tr>
+         
+        }
+    </tbody>
+</table>

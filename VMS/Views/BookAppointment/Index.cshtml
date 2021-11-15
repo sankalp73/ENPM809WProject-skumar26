@@ -1,0 +1,28 @@
+﻿@model IEnumerable<VMS.Models.Center>
+
+<div class="row">
+    <div class="col-md-4">
+        <p style="border:3px; border-style:solid; border-color:#FF0000; padding: 1em;">
+            <form asp-action="LookUp" asp-controller="BookAppointment">
+
+
+                <div class="form-group">
+                    <label class="control-label name">Zip</label>
+                    <input type="number" class="form-control" id="zip" name="zip" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Campaign</label>
+                    <select id="camName" name="camName" asp-items="@(new SelectList(ViewBag.message,"name"))" class="form-control"></select>
+                </div>
+                <input type="submit" value="Search">
+        
+            </form>
+        </p>
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
+}

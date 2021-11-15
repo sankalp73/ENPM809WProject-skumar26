@@ -88,7 +88,41 @@ namespace VMS.Models
         [Required]
         [BsonElement("Campaign")]
         public Campaign campaign { get; set; }
+    }
 
+    public class Certificate
+    {
+        [BsonId]
+        public ObjectId id { get; set; }
+
+        [BsonElement("Salt")]
+        public string salt { get; set; }
+
+        [BsonElement("Digest")]
+        public string digest { get; set; }
+
+        [Required]
+        [BsonElement("Campaign")]
+        public Center center { get; set; }
+
+    }
+
+    public class Appointment
+    {
+        [BsonId]
+        public ObjectId id { get; set; }
+
+        [BsonElement("center")]
+        public Center center { get; set; }
+
+        [BsonElement("ApplicationUser")]
+        public ApplicationUser appUser { get; set; }
+
+        [BsonElement("AppointmentTime")]
+        public DateTime appointmentTime { get; set; }
+
+        [BsonElement("otp")]
+        public int otp { get; set; }
 
     }
 }

@@ -207,3 +207,6 @@ C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\Synerco
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\AddCenter\Index.cshtml.g.cs
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\AntiXssLibrary.dll
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\HtmlSanitizationLibrary.dll
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\DownloadCertificate\Index.cshtml.g.cs
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\BookAppointment\Index.cshtml.g.cs
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\BookAppointment\LookUp.cshtml.g.cs

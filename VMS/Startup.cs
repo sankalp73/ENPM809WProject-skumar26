@@ -97,6 +97,9 @@ namespace VMS
 
             services.AddSingleton<CampaignService>();
             services.AddSingleton<CenterService>();
+            services.AddSingleton<AppointmentService>();
+            services.AddSingleton<CertificateService>();
+            
 
             services.ConfigureApplicationCookie(options =>
             {

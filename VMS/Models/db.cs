@@ -10,7 +10,9 @@ namespace VMS.Models
         public string AdminCollectionName { get; set; }
         public string VaccineCampaignCollectionName { get; set; }
         public string VaccineCenterCollectionName { get; set; }
+        public string CertificateCollectionName { get; set; }
         public string ConnectionString { get; set; }
+        public string AppointmentCollectionName { get; set; }
         public string DatabaseName { get; set; }
 
     }
@@ -19,6 +21,8 @@ namespace VMS.Models
         string AdminCollectionName { get; set; }
         string VaccineCampaignCollectionName { get; set; }
         string VaccineCenterCollectionName { get; set; }
+        string CertificateCollectionName { get; set; }
+        string AppointmentCollectionName { get; set; }
         string ConnectionString { get; set; }
         string DatabaseName { get; set; }
     }
@@ -77,6 +81,54 @@ namespace VMS.Models
 
         public List<Center> Get() =>
             _center.Find(center => true).ToList();
+
+        public List<Center> Get(string cname, int zip, DateTime now) =>
+          _center.Find(center => (center.campaign.Name.Equals(cname) && center.zip == zip && center.campaign.EndDate > now && center.quantity > 0)).ToList();
+
+        public void Update(string name, string vname, int zip, Center newc) =>
+            _center.ReplaceOne(center => center.Name.Equals(name) && center.vname.Equals(vname) && center.zip == zip, newc);
+    }
+
+    public class CertificateService
+    {
+        public dbService service;
+        private readonly IMongoCollection<Certificate> _cert;
+        public CertificateService(IVMSDatabaseSettings settings)
+        {
+            service = new dbService(settings);
+
+            _cert = service.database.GetCollection<Certificate>(settings.CertificateCollectionName);
+        }
+
+        public Certificate Create(Certificate c)
+        {
+            _cert.InsertOne(c);
+            return c;
+        }
+
+        public List<Certificate> Get() =>
+            _cert.Find(certifcate => true).ToList();
+    }
+
+    public class AppointmentService
+    {
+        public dbService service;
+        private readonly IMongoCollection<Appointment> _app;
+        public AppointmentService(IVMSDatabaseSettings settings)
+        {
+            service = new dbService(settings);
+
+            _app = service.database.GetCollection<Appointment>(settings.AppointmentCollectionName);
+        }
+
+        public Appointment Create(Appointment c)
+        {
+            _app.InsertOne(c);
+            return c;
+        }
+
+        public List<Appointment> Get() =>
+            _app.Find(appointment => true).ToList();
     }
 }
 
