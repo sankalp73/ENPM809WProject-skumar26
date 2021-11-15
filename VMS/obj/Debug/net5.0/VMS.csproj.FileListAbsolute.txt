@@ -204,9 +204,15 @@ C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\V
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\AddCenter\ListCenter.cshtml.g.cs
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\Dks.SimpleToken.SystemWeb.dll
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\Synercoding.FormsAuthentication.dll
-C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\AddCenter\Index.cshtml.g.cs
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\AntiXssLibrary.dll
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\HtmlSanitizationLibrary.dll
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\DownloadCertificate\Index.cshtml.g.cs
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\BookAppointment\Index.cshtml.g.cs
 C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\BookAppointment\LookUp.cshtml.g.cs
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\itextsharp.dll
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\Syncfusion.Compression.Portable.dll
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\bin\Debug\net5.0\Syncfusion.Pdf.Portable.dll
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\VerifyCertificate\Index.cshtml.g.cs
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\AddCenter\Index.cshtml.g.cs
+C:\Users\student\Workspace\enpm809wproject-skumar26\VMS\obj\Debug\net5.0\Razor\Views\checkInAppointment\Index.cshtml.g.cs

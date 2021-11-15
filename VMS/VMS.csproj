@@ -18,6 +18,7 @@
     <PackageReference Include="Dks.SimpleToken.SystemWeb" Version="1.0.1" />
     <PackageReference Include="EJS" Version="1.0.0" />
     <PackageReference Include="EJS.Core" Version="1.0.2" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.2" />
     <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.2.1" />
     <PackageReference Include="Konscious.Security.Cryptography.Blake2" Version="1.0.9" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
@@ -32,7 +33,12 @@
     <PackageReference Include="Sitecore.FakeDb" Version="2.0.1" />
     <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.3.0.48" />
     <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="19.3.0.48" />
+    <PackageReference Include="Syncfusion.Pdf.Net.Core" Version="19.3.0.53" />
     <PackageReference Include="Synercoding.FormsAuthentication" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UploadedCertificate\" />
   </ItemGroup>
 
 </Project>

@@ -106,8 +106,8 @@ namespace VMS.Models
             return c;
         }
 
-        public List<Certificate> Get() =>
-            _cert.Find(certifcate => true).ToList();
+        public List<Certificate> Get(ApplicationUser user, Campaign camp) =>
+            _cert.Find(certificate => certificate.applicationUser.Email.Equals(user.Email) && certificate.center.campaign.Name.Equals(camp.Name) ).ToList();
     }
 
     public class AppointmentService

@@ -105,6 +105,9 @@ namespace VMS.Models
         [BsonElement("Campaign")]
         public Center center { get; set; }
 
+        [BsonElement("ApplicationUser")]
+        public ApplicationUser applicationUser;
+
     }
 
     public class Appointment
@@ -124,5 +127,10 @@ namespace VMS.Models
         [BsonElement("otp")]
         public int otp { get; set; }
 
+        [BsonElement("Attended")]
+        public bool attended { get; set;}
+
+        [BsonElement("Cert")]
+        public Certificate cert{ get; set; }
     }
 }

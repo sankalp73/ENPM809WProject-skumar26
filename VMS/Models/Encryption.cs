@@ -40,14 +40,14 @@ namespace VMS.Models
 
         }
 
-        static public bool VerifyHashWithSalt(string password, string saltBytes, string storedPassword)
+        static public bool VerifyHashWithSalt(string fileContent, string saltBytes, string storedHash)
         {
             if (saltBytes[saltBytes.Length - 1] == '\r')
                 saltBytes = saltBytes.Remove(saltBytes.Length - 1, 1);
             byte[] saltByte = Convert.FromBase64String(saltBytes);
-            byte[] storedPass = Convert.FromBase64String(storedPassword);
-            byte[] digestBytes = ComputeHash(password, saltByte);
-            return digestBytes.SequenceEqual(storedPass);
+            byte[] hash = Convert.FromBase64String(storedHash);
+            byte[] digestBytes = ComputeHash(fileContent, saltByte);
+            return digestBytes.SequenceEqual(hash);
         }
         static public byte[] Hash(string password)
         {
