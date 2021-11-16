@@ -9,7 +9,7 @@ using VMS.Models;
 
 namespace VMS.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="User")]
     public class BookAppointmentController : Controller
     {
         private readonly CenterService _service;
@@ -25,6 +25,7 @@ namespace VMS.Controllers
             _aservice = aservice;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             List<string> listName = new List<string>();
@@ -38,6 +39,8 @@ namespace VMS.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult LookUp(int zip, string camName)
         {
             List<Center> center = new List<Center>();
@@ -50,6 +53,7 @@ namespace VMS.Controllers
         }
     
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> MakeAppointment(Center model, string camname, string timings)
         {
            if(timings ==  null)
@@ -69,9 +73,10 @@ namespace VMS.Controllers
                 return RedirectToAction("Index", "BookAppointment"); 
             }
 
-            model.campaign = cam;
+            model = _service.Get(model.Name, model.zip);
             a.center = model;
             a.appUser = appUser;
+            a.appointmentTime = time;
 
             _aservice.Create(a);
 

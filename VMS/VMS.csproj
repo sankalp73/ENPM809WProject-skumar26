@@ -29,6 +29,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="MongoDB.Driver" Version="2.13.2" />
+    <PackageReference Include="Myrmec" Version="1.2.0" />
     <PackageReference Include="Otp.NET" Version="1.2.2" />
     <PackageReference Include="Quartz" Version="3.3.3" />
     <PackageReference Include="Sitecore.FakeDb" Version="2.0.1" />

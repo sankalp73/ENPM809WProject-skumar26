@@ -100,6 +100,10 @@
               "target": "Package",
               "version": "[2.13.2, )"
             },
+            "Myrmec": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            },
             "Otp.NET": {
               "target": "Package",
               "version": "[1.2.2, )"

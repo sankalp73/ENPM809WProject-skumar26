@@ -14,9 +14,11 @@ using System.Web;
 using Microsoft.AspNet.Identity;
 using IdentityResult = Microsoft.AspNet.Identity.IdentityResult;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VMS.Controllers
 {
+    
     public class WelcomeController : Controller
     {
         private Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
@@ -36,6 +38,8 @@ namespace VMS.Controllers
             return View();
         }
 
+        [NonAction]
+        [AllowAnonymous]
         private bool CheckAdminApprovedByHR(string email, string id, string path)
         {
 
@@ -51,6 +55,7 @@ namespace VMS.Controllers
         }
 
         [NonAction]
+        [AllowAnonymous]
         public async Task<IActionResult> SetRole(ApplicationUser appUser)
         {
             ApplicationRoles identityRole;
@@ -76,7 +81,7 @@ namespace VMS.Controllers
             return RedirectToAction(action, controller);
         }
 
-
+        [AllowAnonymous]
         public async Task<IActionResult> Login2FA(string code)
         {
             if (!ModelState.IsValid)
@@ -104,6 +109,7 @@ namespace VMS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<ActionResult> SignIn(string email, string pass)
         {
          
@@ -153,6 +159,7 @@ namespace VMS.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult SignOn()
         {
             return View("SignOn");

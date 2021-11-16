@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace VMS.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "User")]
     public class DownloadCertificateController : Controller
     {
         private readonly CertificateService _service;
@@ -87,6 +87,7 @@ namespace VMS.Controllers
          *  Otherwise create the hash to check for certificate validity later on.
          *  Also check if the appointment was attended.
          */
+        [HttpPost]
         public async Task<IActionResult> Download(Appointment a)
         {
             if(ModelState.IsValid)

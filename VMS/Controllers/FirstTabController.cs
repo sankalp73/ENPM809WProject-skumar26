@@ -9,7 +9,7 @@ using VMS.Models;
 
 namespace VMS.Controllers
 {
-   [Authorize]
+   [Authorize(Roles="Admin")]
     public class FirstTabController : Controller
     {
         private readonly CampaignService _service;

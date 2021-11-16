@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Myrmec;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using VMS.Models;
 
@@ -29,12 +31,42 @@ namespace VMS.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> UploadFileAsync(IFormFile file, string campname)
         {
             try
             {
-                if (file.Length > 0)
+                long mb = 5368709120; // 5 MB;
+                if (file != null && file.Length > 0 && file.Length > (mb))
                 {
+                    var supported = "pdf";
+                    var extension = System.IO.Path.GetExtension(file.FileName).Substring(1);
+
+                    var sniffer = new Sniffer();
+                    var supportedFiles = new List<Record>
+                    {                       
+                        new Record("pdf", "25 50 44 46"),
+                    };
+                    sniffer.Populate(supportedFiles);
+
+                    byte[] header = new byte[0];
+                    foreach(KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues> v in file.Headers)
+                    {                       
+                        header.Concat(Encoding.UTF8.GetBytes(v.Value));
+                    }
+                    var results = sniffer.Match(header);
+                    if(results.Count == 0)
+                    {
+                        ViewBag.Message = "Not a PDF!!";
+                        return View();
+                    }
+
+                    if (supported.Equals(extension))
+                    {
+                        ViewBag.Message = "Not a PDF!!";
+                        return View();
+
+                    }
                     Campaign camp = _cservice.Get(campname);
                     var email = HttpContext.Session.GetString("Username");
                     var user = await _userManager.FindByEmailAsync(email);

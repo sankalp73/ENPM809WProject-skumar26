@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using VMS.Models;
 
 namespace VMS.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class checkInAppointmentController : Controller
     {
         private readonly ILogger<checkInAppointmentController> _logger;
@@ -28,6 +30,7 @@ namespace VMS.Controllers
          *  of OTP generation to check in for appointment and
          *  generating vaccine certificate
          */
+        [ValidateAntiForgeryToken]
         public IActionResult CheckIn(string email, string otp)
         {
             var found = 0;
@@ -46,7 +49,7 @@ namespace VMS.Controllers
             {
                 _logger.LogError("Did not find OTP! for user"+ email);
                 ViewBag.Mesage = "OTP does not exist!";
-                return View();
+                return View("Index");
             }
 
             var remainingSeconds = onetime.totp.RemainingSeconds(DateTime.UtcNow);
@@ -56,11 +59,11 @@ namespace VMS.Controllers
                 foreach (KeyValuePair<string, OTP> pair in TokenHashMap.HashMap)
                     if (email == pair.Key)
                         TokenHashMap.HashMap.Remove(pair.Key);
-                return View();
+                return View("Index");
             }
 
             TempData["Sucess"] = "Client has been checkedIn for appoitment!";
-            return View();
+            return View("Index");
         }
     }
 }

@@ -85,6 +85,9 @@ namespace VMS.Models
         public List<Center> Get(string cname, int zip, DateTime now) =>
           _center.Find(center => (center.campaign.Name.Equals(cname) && center.zip == zip && center.campaign.EndDate > now && center.quantity > 0)).ToList();
 
+        public Center Get(string name, int zip) =>
+            _center.Find<Center>(center => center.Name.Equals(name) && center.zip == zip).FirstOrDefault();
+
         public void Update(string name, string vname, int zip, Center newc) =>
             _center.ReplaceOne(center => center.Name.Equals(name) && center.vname.Equals(vname) && center.zip == zip, newc);
     }
