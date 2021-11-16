@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 using VMS.Controllers;
 using VMS.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 
 namespace VMS
 {
@@ -119,6 +122,39 @@ namespace VMS
                 option.IterationCount = 8000;
             });
 
+            // creaete bg tasks
+            services.Add(new ServiceDescriptor(typeof(IJob), typeof(sendAppointmentVerificationOTP), ServiceLifetime.Transient));
+            services.AddSingleton<IJobFactory, ScheduledJobFactory>();
+            services.AddSingleton<IJobDetail>(provider =>
+            {
+                return JobBuilder.Create<sendAppointmentVerificationOTP>()
+                  .WithIdentity("SendVerificationOtp", "user")
+                  .Build();
+            });
+
+            services.AddSingleton<ITrigger>(provider =>
+            {
+                return TriggerBuilder.Create()
+                .WithIdentity($"Sample.trigger", "group1")
+                .StartNow()
+                .WithSimpleSchedule
+                 (s =>
+                    s.WithInterval(TimeSpan.FromSeconds(30))
+                    .RepeatForever()
+                 )
+                 .Build();
+            });
+
+            services.AddSingleton<IScheduler>(provider =>
+            {
+                var schedulerFactory = new StdSchedulerFactory();
+                var scheduler = schedulerFactory.GetScheduler().Result;
+                scheduler.JobFactory = provider.GetService<IJobFactory>();
+                scheduler.Start();
+                return scheduler;
+            });
+
+            services.AddLogging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

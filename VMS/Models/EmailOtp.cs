@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using OtpNet;
@@ -13,17 +16,19 @@ namespace VMS.Models
     {
         public Totp totp;
         public string token;
+        public DateTime created;
 
     }
 
     public class TokenHashMap
     {
         public static Dictionary<string, OTP> HashMap = new Dictionary<string, OTP>();
-    }
+    }   
 
     public class EmailOtp
     {
-        protected Tuple<string, string> getConfig(string path)
+
+        public Tuple<string, string> getConfig(string path)
         {
             string[] lines = System.IO.File.ReadAllLines(path);
 
@@ -41,8 +46,9 @@ namespace VMS.Models
             var emailotp = new EmailOtp();
             OTP Otp = new OTP();
             byte[] secretKey = Encryption.Hash(email);
-            Otp.totp = new Totp(secretKey, totpSize: 8, step: 30, mode: OtpHashMode.Sha512);
+            Otp.totp = new Totp(secretKey, totpSize: 8, step: 5*60, mode: OtpHashMode.Sha512);
             Otp.token = Otp.totp.ComputeTotp(DateTime.UtcNow);
+            Otp.created = DateTime.Now;
 
             TokenHashMap.HashMap["email"] = Otp;
             Tuple<string, string> t;
@@ -60,13 +66,16 @@ namespace VMS.Models
                     message.Subject = "Please verify your account";
                     break;
                 case 1:
-                    Url = "https://localhost:44337/AppointmentObliged.aspx?token=" + Otp.token;
-                    mailbody = "Click on the link to check in to your appointment:" + Url;
+                    mailbody = "Please provide this to the Admin at the center:" + Otp.token;
                     message.Subject = "OTP for appointment";
                     break;
                 case 2:
                     mailbody = "OTP for appointment your appointment scheduled for today. Below are the details: \n" + details;
                     message.Subject = "Appointment Reminder"; 
+                    break;
+                case 3:
+                    mailbody = "OTP for 2FA: \n" + details;
+                    message.Subject = "VMS OTP";
                     break;
             }
            
@@ -80,6 +89,31 @@ namespace VMS.Models
             client.UseDefaultCredentials = false;
             client.Credentials = basicCredential1;
             client.Send(message);
+        }
+    }
+
+    public class EmailService : IIdentityMessageService
+    {
+        public Task SendAsync(IdentityMessage message)
+        {
+            string text = message.Body;
+            string html = message.Body;
+            var emailotp = new EmailOtp();
+            Tuple<string,string> t = emailotp.getConfig("C:\\Users\\student\\Workspace\\config.txt");
+            //do whatever you want to the message        
+            MailMessage msg = new MailMessage();
+            msg.From = new MailAddress(t.Item1);
+            msg.To.Add(new MailAddress(message.Destination));
+            msg.Subject = message.Subject;
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
+
+            SmtpClient smtpClient = new SmtpClient("smtp.whatever.net", Convert.ToInt32(587));
+            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(t.Item1, t.Item2);
+            smtpClient.Credentials = credentials;
+            smtpClient.Send(msg);
+
+            return Task.FromResult(0);
         }
     }
 }

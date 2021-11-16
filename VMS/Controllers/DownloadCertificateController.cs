@@ -19,12 +19,14 @@ namespace VMS.Controllers
     public class DownloadCertificateController : Controller
     {
         private readonly CertificateService _service;
+        private readonly AppointmentService _appservice;
         private Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
 
-        public DownloadCertificateController(CertificateService service, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager)
+        public DownloadCertificateController(CertificateService service, AppointmentService appservice, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager)
         {
             _service = service;
             _userManager = userManager;
+            _appservice = appservice;
     }
 
         public IActionResult Index()
@@ -85,10 +87,13 @@ namespace VMS.Controllers
          *  Otherwise create the hash to check for certificate validity later on.
          *  Also check if the appointment was attended.
          */
-        public async Task<IActionResult> DownloadAsync(Appointment a)
+        public async Task<IActionResult> Download(Appointment a)
         {
             if(ModelState.IsValid)
             {
+                var email = HttpContext.Session.GetString("UserName");
+                // Get appointment from the value submitted
+                a = _appservice.Get(email, a.center.Name, a.center.vname, a.center.campaign.Name);
                 if (a.cert.digest != null)
                 {
                     ModelState.AddModelError(string.Empty, "Wow! You downloaded the certificate and don't remember?");

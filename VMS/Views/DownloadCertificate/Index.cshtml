@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<VMS.Models.Appointment>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.appointmentTime)
+                @Html.DisplayNameFor(model => model.center.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.otp)
+                @Html.DisplayNameFor(model => model.center.vname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.center.campaign.Name)
             </th>
             <th></th>
         </tr>
@@ -18,19 +18,29 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.appointmentTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.otp)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
+        <tr>
+            <form asp-action="Download" asp-controller="DownloadCertificate">
+            <td>
+                <div class="form-group">
+                    <input type="text" name="Name" id="Name" value="@Html.DisplayFor(modelItem => item.center.Name)" class="form-control" readonly="readonly">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" name="Name" id="Name" value="@Html.DisplayFor(modelItem => item.center.vname)" class="form-control" readonly="readonly">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" name="Name" id="Name" value="@Html.DisplayFor(modelItem => item.center.campaign.Name)" class="form-control" readonly="readonly">
+                </div>
+
+            </td>
+            <td>
+                <input type="submit" value="Select" />
+            </td>
+            </form>
+        </tr>
         }
     </tbody>
 </table>

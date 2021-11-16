@@ -129,6 +129,9 @@ namespace VMS.Models
 
         public List<Appointment> Get() =>
             _app.Find(appointment => true).ToList();
+
+        public Appointment Get(string email, string centerName, string vname, string campname) =>
+            _app.Find<Appointment>(app => app.center.Name == centerName && app.appUser.Email.Equals(email) && app.center.vname.Equals(vname) && app.center.campaign.Name.Equals(campname)).FirstOrDefault();
     }
 }
 

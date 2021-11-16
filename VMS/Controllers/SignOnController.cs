@@ -44,6 +44,9 @@ namespace VMS.Controllers
                     UserName = id
                 };
 
+                // Enable 2FA for every user when they register
+                appUser.TwoFactorEnabled = true;
+
                 IdentityResult result = await _adminManager.CreateAsync(appUser, pass);
                 if (result.Succeeded)
                 {
