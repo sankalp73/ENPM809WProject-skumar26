@@ -1,0 +1,17 @@
+﻿
+
+    @{
+        ViewData["Title"] = "Login 2FA";
+    }
+
+    <h1 class="bg-info text-white">Login 2FA</h1>
+
+    <p>Enter your authentication code</p>
+
+    <form asp-action="Login2FA" asp-controller="Welcome">
+        <div class="form-group">
+            <label>Code</label>
+            <input id="code" name="code" class="form-control" />
+        </div>
+        <button class="btn btn-primary" type="submit">Log In</button>
+    </form>

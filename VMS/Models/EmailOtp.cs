@@ -70,10 +70,6 @@ namespace VMS.Models
                     message.Subject = "OTP for appointment";
                     break;
                 case 2:
-                    mailbody = "OTP for appointment your appointment scheduled for today. Below are the details: \n" + details;
-                    message.Subject = "Appointment Reminder"; 
-                    break;
-                case 3:
                     mailbody = "OTP for 2FA: \n" + details;
                     message.Subject = "VMS OTP";
                     break;
@@ -89,31 +85,6 @@ namespace VMS.Models
             client.UseDefaultCredentials = false;
             client.Credentials = basicCredential1;
             client.Send(message);
-        }
-    }
-
-    public class EmailService : IIdentityMessageService
-    {
-        public Task SendAsync(IdentityMessage message)
-        {
-            string text = message.Body;
-            string html = message.Body;
-            var emailotp = new EmailOtp();
-            Tuple<string,string> t = emailotp.getConfig("C:\\Users\\student\\Workspace\\config.txt");
-            //do whatever you want to the message        
-            MailMessage msg = new MailMessage();
-            msg.From = new MailAddress(t.Item1);
-            msg.To.Add(new MailAddress(message.Destination));
-            msg.Subject = message.Subject;
-            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
-            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
-
-            SmtpClient smtpClient = new SmtpClient("smtp.whatever.net", Convert.ToInt32(587));
-            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(t.Item1, t.Item2);
-            smtpClient.Credentials = credentials;
-            smtpClient.Send(msg);
-
-            return Task.FromResult(0);
         }
     }
 }

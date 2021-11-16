@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
+using Microsoft.AspNet.Identity;
 
 namespace VMS
 {
@@ -46,6 +47,7 @@ namespace VMS
                 options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = true;
+                
                 options.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
             })
                 .AddMongoDbStores<ApplicationUser, ApplicationRoles, Guid>
@@ -186,8 +188,7 @@ namespace VMS
                     name: "default",
                     pattern: "{controller=Welcome}/{action=Index}");
             });
-           
-            
+
         }
     }
 }
