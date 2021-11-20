@@ -30,10 +30,11 @@ namespace VMS.Models
             return buffer;
         }
 
-        static public Tuple<string, string> HashWithSalt(string password)
+        static public Tuple<string, string> HashWithSalt(string content)
         {
+       
             byte[] saltBytes = CreateSalt();
-            byte[] digestBytes = ComputeHash(password, saltBytes);
+            byte[] digestBytes = ComputeHash(content, saltBytes);
             string salt = Convert.ToBase64String(saltBytes);
             string digest = Convert.ToBase64String(digestBytes);
             return Tuple.Create(salt, digest);

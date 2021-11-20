@@ -13,10 +13,11 @@ namespace VMS.Controllers
     public class checkInAppointmentController : Controller
     {
         private readonly ILogger<checkInAppointmentController> _logger;
-
-        public checkInAppointmentController(ILogger<checkInAppointmentController> logger)
+        private readonly AppointmentService _appservice;
+        public checkInAppointmentController(ILogger<checkInAppointmentController> logger, AppointmentService appservice)
         {
             _logger = logger;
+            _appservice = appservice;
         }
 
 
@@ -43,6 +44,10 @@ namespace VMS.Controllers
                     found = 1;
                     onetime = o.Value;
                     email = o.Key;
+                    /* mark appointment attended */
+                    Appointment a = _appservice.Get(onetime.token);
+                    a.attended = true;
+                    _appservice.Update(a);
                 }
             }
             if (found == 0)

@@ -102,7 +102,7 @@ namespace VMS.Models
         public string digest { get; set; }
 
         [Required]
-        [BsonElement("Campaign")]
+        [BsonElement("Center")]
         public Center center { get; set; }
 
         [BsonElement("ApplicationUser")]
@@ -115,7 +115,7 @@ namespace VMS.Models
         [BsonId]
         public ObjectId id { get; set; }
 
-        [BsonElement("center")]
+        [BsonElement("Center")]
         public Center center { get; set; }
 
         [BsonElement("ApplicationUser")]
@@ -125,12 +125,12 @@ namespace VMS.Models
         public DateTime appointmentTime { get; set; }
 
         [BsonElement("otp")]
-        public int otp { get; set; }
+        public string otp { get; set; }
 
         [BsonElement("Attended")]
         public bool attended { get; set;}
 
-        [BsonElement("Cert")]
+        [BsonElement("Certificate")]
         public Certificate cert{ get; set; }
     }
 }

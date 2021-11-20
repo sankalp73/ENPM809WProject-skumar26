@@ -4,52 +4,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.center.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.center.vname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.center.campaign.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <form asp-action="Download" asp-controller="DownloadCertificate">
-            <td>
-                <div class="form-group">
-                    <input type="text" name="Name" id="Name" value="@Html.DisplayFor(modelItem => item.center.Name)" class="form-control" readonly="readonly">
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <input type="text" name="Name" id="Name" value="@Html.DisplayFor(modelItem => item.center.vname)" class="form-control" readonly="readonly">
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <input type="text" name="Name" id="Name" value="@Html.DisplayFor(modelItem => item.center.campaign.Name)" class="form-control" readonly="readonly">
-                </div>
-
-            </td>
-            <td>
-                <input type="submit" value="Select" />
-            </td>
-            </form>
-        </tr>
-        }
-    </tbody>
-</table>
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
                 @Html.DisplayNameFor(model => model.appointmentTime)
             </th>
             <th>
@@ -73,24 +27,24 @@
                 <form asp-action="Download" asp-controller="DownloadCertificate">
                 <td>
                     <div class="form-group">
-                        <input type="text" name="Name" id="Name" value="@Html.DisplayFor(modelItem => item.appointmentTime)" class="form-control" readonly="readonly">
+                        <input type="text" name="appointmentTime" id="appointmentTime" value="@Html.DisplayFor(modelItem => item.appointmentTime)" class="form-control" readonly="readonly">
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
-                        <input type="text" name="vname" id="vname" value="@Html.DisplayFor(modelItem => item.center.vname)" class="form-control" readonly="readonly">
+                        <input type="text" name="centerVname" id="centerVname" value="@Html.DisplayFor(modelItem => item.center.vname)" class="form-control" readonly="readonly">
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
-                        <input type="text" name="quantity" id="quantity" value="@Html.DisplayFor(modelItem => item.center.Name)" class="form-control" readonly="readonly">
+                        <input type="text" name="centerName" id="centerName" value="@Html.DisplayFor(modelItem => item.center.Name)" class="form-control" readonly="readonly">
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
-                        <input type="text" name="startTime" id="startTime" value="@Html.DisplayFor(modelItem => item.center.campaign.Name)" class="form-control" readonly="readonly">
+                        <input type="text" name="campaignName" id="campaignName" value="@Html.DisplayFor(modelItem => item.center.campaign.Name)" class="form-control" readonly="readonly">
                     </div>
-                </td>                
+                </td>
                 <td>
                     <input type="submit" value="Download" />
                 </td>
@@ -100,3 +54,8 @@
         }
     </tbody>
 </table>
+
+@if (TempData["Success"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
+}

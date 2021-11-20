@@ -29,9 +29,16 @@ namespace VMS.Controllers
             _appservice = appservice;
     }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<Appointment> list = new List<Appointment>();
+            List<string> listName = new List<string>();
+
+            string email = HttpContext.Session.GetString("Username");
+            ApplicationUser appUser = await _userManager.FindByEmailAsync(email);
+
+            list = _appservice.Get(appUser);
+            return View(list);
         }
 
         [NonAction]
@@ -49,8 +56,8 @@ namespace VMS.Controllers
             
             dataTable.Columns.Add("ID"); 
             dataTable.Columns.Add("Email");
-            dataTable.Columns.Add("Vaccine Name");
             dataTable.Columns.Add("Campaign Name");
+            dataTable.Columns.Add("Vaccine Name");
             dataTable.Columns.Add("Time");
             //dataTable.Columns.Add("Expiry");
 
@@ -88,14 +95,14 @@ namespace VMS.Controllers
          *  Also check if the appointment was attended.
          */
         [HttpPost]
-        public async Task<IActionResult> Download(Appointment a)
+        public async Task<IActionResult> Download(string centerName, string centerVname, string campaignName)
         {
             if(ModelState.IsValid)
             {
-                var email = HttpContext.Session.GetString("UserName");
+                var email = HttpContext.Session.GetString("Username");
                 // Get appointment from the value submitted
-                a = _appservice.Get(email, a.center.Name, a.center.vname, a.center.campaign.Name);
-                if (a.cert.digest != null)
+                Appointment a = _appservice.Get(email, centerName, centerVname, campaignName);
+                if (a.cert != null && a.cert.digest != null)
                 {
                     ModelState.AddModelError(string.Empty, "Wow! You downloaded the certificate and don't remember?");
                     return View();
@@ -106,10 +113,10 @@ namespace VMS.Controllers
                     return View();
                 }
                 else
-                    await buildPdfAsync(a);
-                TempData["Success"] = "Your Certificate should have been downloaded! Remember to keep this safe!";
+                    return await buildPdfAsync(a);
+                //TempData["Success"] = "Your Certificate should have been downloaded! Remember to keep this safe!";
             }
-            return View();
+            return View("Index");
         }
     }
 }

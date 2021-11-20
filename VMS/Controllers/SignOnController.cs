@@ -52,9 +52,7 @@ namespace VMS.Controllers
                 {
                     var token = await _adminManager.GenerateEmailConfirmationTokenAsync(appUser);
                     token = System.Web.HttpUtility.UrlEncode(token);
-                    //var confirmationLink = Url.Action("ConfirmEmail", "Account", new { token, email = email }, Request.Scheme);
                     EmailOtp.sendOTP(email, 0, token);
-                   // await _adminManager.AddToRoleAsync(appUser, "Admin");
                     return Content("User Created Successfully! Please verify email!");
                 }
                 else

@@ -59,7 +59,7 @@ namespace VMS.Models
             _campaign.Find(campaign => true).ToList();
 
         public Campaign Get(string name) =>
-            _campaign.Find<Campaign>(campaign => campaign.Name == name).FirstOrDefault();
+            _campaign.Find<Campaign>(campaign => campaign.Name.Equals(name)).FirstOrDefault();
     }
 
     public class CenterService
@@ -133,8 +133,18 @@ namespace VMS.Models
         public List<Appointment> Get() =>
             _app.Find(appointment => true).ToList();
 
+
+        public Appointment Get(string token) =>
+           _app.Find(appointment => appointment.otp.Equals(token)).FirstOrDefault();
+
+        public void Update(Appointment a) =>
+           _app.ReplaceOne<Appointment>(app => app.id == a.id, a);
+
         public Appointment Get(string email, string centerName, string vname, string campname) =>
             _app.Find<Appointment>(app => app.center.Name == centerName && app.appUser.Email.Equals(email) && app.center.vname.Equals(vname) && app.center.campaign.Name.Equals(campname)).FirstOrDefault();
+
+        public List<Appointment> Get(ApplicationUser appUser) =>
+            _app.Find(appointment => appointment.appUser.Id == appUser.Id && appointment.attended == true).ToList();
     }
 }
 

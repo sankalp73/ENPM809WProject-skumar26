@@ -124,13 +124,14 @@ namespace VMS
                 option.IterationCount = 8000;
             });
 
-            // creaete bg tasks
+            // create bg tasks
             services.Add(new ServiceDescriptor(typeof(IJob), typeof(sendAppointmentVerificationOTP), ServiceLifetime.Transient));
-            services.AddSingleton<IJobFactory, ScheduledJobFactory>();
+            services.AddSingleton<IJobFactory, sendAppointmentVerificationOTPFactory>();
+            services.AddSingleton<sendAppointmentVerificationOTP>();
             services.AddSingleton<IJobDetail>(provider =>
             {
                 return JobBuilder.Create<sendAppointmentVerificationOTP>()
-                  .WithIdentity("SendVerificationOtp", "user")
+                  .WithIdentity("SendVerificationOtp")
                   .Build();
             });
 
@@ -157,10 +158,11 @@ namespace VMS
             });
 
             services.AddLogging();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IScheduler scheduler)
         {
             app.UseSession();
 
@@ -189,6 +191,7 @@ namespace VMS
                     pattern: "{controller=Welcome}/{action=Index}");
             });
 
+            scheduler.ScheduleJob(app.ApplicationServices.GetService<IJobDetail>(), app.ApplicationServices.GetService<ITrigger>());
         }
     }
 }

@@ -32,12 +32,12 @@ namespace VMS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> UploadFileAsync(IFormFile file, string campname)
+        public async Task<ActionResult> UploadFile(IFormFile file, string campname, string email)
         {
             try
             {
                 long mb = 5368709120; // 5 MB;
-                if (file != null && file.Length > 0 && file.Length > (mb))
+                if (file != null && file.Length > 0 && file.Length < (mb))
                 {
                     var supported = "pdf";
                     var extension = System.IO.Path.GetExtension(file.FileName).Substring(1);
@@ -55,49 +55,59 @@ namespace VMS.Controllers
                         header.Concat(Encoding.UTF8.GetBytes(v.Value));
                     }
                     var results = sniffer.Match(header);
+                    /* TBD */
+                    /*
                     if(results.Count == 0)
                     {
                         ViewBag.Message = "Not a PDF!!";
-                        return View();
-                    }
+                        return View("Index");
+                    }*/
 
-                    if (supported.Equals(extension))
+                    if (supported.Equals(extension) == false)
                     {
                         ViewBag.Message = "Not a PDF!!";
-                        return View();
+                        return View("Index");
 
                     }
                     Campaign camp = _cservice.Get(campname);
-                    var email = HttpContext.Session.GetString("Username");
+                    
                     var user = await _userManager.FindByEmailAsync(email);
 
                     List<Certificate> c = _service.Get(user, camp);
                     if (c.Count == 0)
                     {
                         ViewBag.Message = "No Cert found !!";
-                        return View();
+                        return View("Index");
                     }
                     string _FileName = Path.GetFileName(file.FileName);
                     string salt = c[0].salt;
                     string digest = c[0].digest;
-                    if (Encryption.VerifyHashWithSalt(file.OpenReadStream().ToString(), salt, digest))
+
+                    var content = new StringBuilder();
+                    using (var reader = new StreamReader(file.OpenReadStream()))
+                    {
+                        while (reader.Peek() >= 0)
+                            content.AppendLine(reader.ReadLine());
+                    }
+
+                    if (Encryption.VerifyHashWithSalt(content.ToString(), salt, digest))
                     {
                         TempData["Success"] = "This is a legit Certificate!";
-                        return View();
+                        return View("Index");
                     }
                     else
                     {
-                        ViewBag.Message = "Fake Certificate!!";
-                        return View();
+                        TempData["Success"] = "Fake Certificate!!";
+                        return View("Index");
                     }
                 }
                 ViewBag.Message = "File Uploaded Successfully!!";
-                return View();
+                return View("Index");
             }
             catch
             {
                 ViewBag.Message = "File upload failed!!";
-                return View();
+                return View("Index");
             }
         }
     }

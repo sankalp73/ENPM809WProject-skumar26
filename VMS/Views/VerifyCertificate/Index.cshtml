@@ -3,23 +3,32 @@
 *@
 @{
 }
-<h2>Upload Certificate</h2>
-@using (Html.BeginForm("UploadCertifcate", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+<h2>Upload Certificate</h2> 
+<form asp-action="UploadFile" asp-controller="VerifyCertificate" enctype="multipart/form-data" method="POST">
 
-    <div>
-        @Html.TextBox("file", "", new { type = "file" }) <br />
+    <div class="form-group">
 
-        @ViewBag.Message
-    </div>
+        @Html.TextBox("file", "file", new { type = "file" }) <br />
+        <label class="control-label">Campaign</label>
+        <span class="text-danger"></span>
+        <input type="text" name="campname" id="campname" />
 
-    <div class="form-group">      
-         <label  class="control-label">Campaign</label>         
-         <span  class="text-danger"></span>
-        <input type="text" />
-        @ViewBag.Message
+        <label class="control-label">Email</label>
+        <span class="text-danger"></span>
+        <input type="text" name="email" id="email" />
     </div>
 
     <input type="submit" value="Upload" />
 
+</form>
+
+
+<div>
+    @ViewBag.Message
+</div>
+
+
+@if (TempData["Success"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
 }

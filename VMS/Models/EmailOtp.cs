@@ -40,7 +40,7 @@ namespace VMS.Models
             return Tuple.Create("", "");
         }
 
-        public static void sendOTP(string mail, int cmd, string details)
+        public static string sendOTP(string mail, int cmd, string details)
         {
             string email = mail;
             var emailotp = new EmailOtp();
@@ -85,6 +85,8 @@ namespace VMS.Models
             client.UseDefaultCredentials = false;
             client.Credentials = basicCredential1;
             client.Send(message);
+
+            return Otp.token;
         }
     }
 }

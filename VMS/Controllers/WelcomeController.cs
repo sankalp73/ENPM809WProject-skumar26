@@ -90,8 +90,6 @@ namespace VMS.Controllers
             }
             string email = HttpContext.Session.GetString("Username");
             ApplicationUser appUser = await _userManager.FindByEmailAsync(email);
-            //ApplicationUser appUser =  await _signInManager.GetTwoFactorAuthenticationUserAsync();
-            //var result = await _signInManager.TwoFactorSignInAsync("Email", code, false, false);
             var result = await _userManager.VerifyTwoFactorTokenAsync(appUser, "Email", code);
             if (result)
             {
